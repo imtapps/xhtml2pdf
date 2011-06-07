@@ -620,7 +620,20 @@ class PmlKeepInFrame(KeepInFrame, PmlMaxHeightMixIn):
         self.maxHeight = self.setMaxHeight(availHeight)
         return KeepInFrame.wrap(self, availWidth, availHeight)
 
+import copy
 class PmlTable(Table, PmlMaxHeightMixIn):
+
+    def __init__(self, data, *args, **kwargs):
+        Table.__init__(self, copy.deepcopy(data), *args, **kwargs)
+        self.split_called = False
+
+    def onSplit(self, T, byRow=1):
+        append_text = getattr(self, 'repeatText', None)
+        if self.split_called and append_text:
+            for frag in T._cellvalues[0][0]._content[0].frags:
+                if frag.text:
+                    frag.text += self.repeatText
+        self.split_called = True
 
     def _normWidth(self, w, maxw):
         " Helper for calculating percentages "

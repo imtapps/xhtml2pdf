@@ -181,6 +181,7 @@ class pisaTagTABLE(pisaTag):
         tdata.colw = []
         tdata.rowh = []
         tdata.repeat = attrs.repeat
+        tdata.repeattext = attrs.repeattext
         tdata.width = _width(attrs.width)
 
         # self.tabdata.append(tdata)
@@ -228,6 +229,7 @@ class pisaTagTABLE(pisaTag):
 
                 # XXX Maybe we need to copy some more properties?
                 t.keepWithNext = c.frag.keepWithNext
+                t.repeatText = tdata.repeattext
                 # t.hAlign = tdata.align
                 c.addStory(t)
             else:
