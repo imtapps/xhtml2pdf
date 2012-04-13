@@ -630,9 +630,13 @@ class PmlTable(Table, PmlMaxHeightMixIn):
     def onSplit(self, T, byRow=1):
         append_text = getattr(self, 'repeatText', None)
         if self.split_called and append_text:
-            for frag in T._cellvalues[0][0]._content[0].frags:
+            frags = T._cellvalues[0][0]._content[0].frags
+            frag_count = len(frags)
+            for frag_item in reversed(range(len(frags) * -1, -1)):
+                frag = frags[frag_item]
                 if frag.text:
                     frag.text += self.repeatText
+                    break
         self.split_called = True
 
     def _normWidth(self, w, maxw):
